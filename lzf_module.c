@@ -15,8 +15,6 @@ python_compress(PyObject *self, PyObject *args) {
 
     if (!outlen) outlen = inlen - 2;
 
-    Py_BEGIN_ALLOW_THREADS
-
     output = (char *)malloc(outlen);
     outlen = lzf_compress(input, inlen, output, outlen + 1);
 
@@ -27,8 +25,6 @@ python_compress(PyObject *self, PyObject *args) {
         result = Py_None;
     }
     free(output);
-
-    Py_END_ALLOW_THREADS
 
     return result;
 }
@@ -44,8 +40,6 @@ python_decompress(PyObject *self, PyObject *args) {
     if (!PyArg_ParseTuple(args, "s#l", &input, &inlen, &outlen))
         return NULL;
 
-    Py_BEGIN_ALLOW_THREADS
-
     output = (char *)malloc(outlen);
     outlen = lzf_decompress(input, inlen, output, outlen);
 
@@ -56,8 +50,6 @@ python_decompress(PyObject *self, PyObject *args) {
         result = Py_None;
     }
     free(output);
-
-    Py_END_ALLOW_THREADS
 
     return result;
 }
