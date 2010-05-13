@@ -63,9 +63,19 @@ python_decompress(PyObject *self, PyObject *args) {
 
 static PyMethodDef methods[] = {
     {"compress", python_compress, METH_VARARGS,
-"return the compressed string, \
-or None if it doesn't compress to smaller than the original"},
-    {"decompress", python_decompress, METH_VARARGS, ""},
+"compress(input, max_length=0)\n\
+\n\
+return the compressed string, or None if it doesn't compress to smaller \n\
+than the original\n\
+\n\
+takes an optional second parameter, for specifying a maximum compressed \n\
+length (default is one less than the length of the original)"},
+    {"decompress", python_decompress, METH_VARARGS,
+"decompress(input, max_length)\n\
+\n\
+return the decompressed string\n\
+\n\
+will return None if the string doesn't decompress to within max_length bytes"},
     {NULL, NULL, 0, NULL}
 };
 
