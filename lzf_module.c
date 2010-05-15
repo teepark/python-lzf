@@ -1,5 +1,5 @@
 #include "Python.h"
-
+#include <errno.h>
 #include "lzf.h"
 
 #if PY_MAJOR_VERSION >= 3
@@ -57,6 +57,10 @@ python_decompress(PyObject *self, PyObject *args) {
     if (outlen)
         result = PYBYTES_FSAS(output, outlen);
     else {
+        if (errno == EINVAL) {
+            PyErr_SetString(PyExc_ValueError, "error in compressed data");
+            return NULL;
+        }
         Py_XINCREF(Py_None);
         result = Py_None;
     }
