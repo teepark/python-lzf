@@ -26,6 +26,9 @@ class LZFTest(object):
         c = self.compress(self.VAL)
         self.assertRaises(ValueError, lzf.decompress, c, -1)
 
+    def test_wrong_maxlen_type(self):
+        self.assertRaises(TypeError, lzf.compress, self.VAL, "hi there")
+
 
 class ShortString(LZFTest, unittest.TestCase):
     VAL = "this is a test"

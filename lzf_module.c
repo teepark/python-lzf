@@ -10,13 +10,6 @@
     #define PYBYTES_FSAS PyString_FromStringAndSize
 #endif
 
-#define GET_LONG(p,l) \
-    if (PyInt_CheckExact(p))\
-        l = PyInt_AsLong(p);\
-    else if (PyLong_CheckExact(p))\
-        l = PyLong_AsLong(p);\
-    else l = 0;
-
 
 static PyObject *
 python_compress(PyObject *self, PyObject *args) {
@@ -31,8 +24,14 @@ python_compress(PyObject *self, PyObject *args) {
 
     if (pyoutlen == Py_None)
         outlen = inlen - 1;
-    else
-        GET_LONG(pyoutlen, outlen)
+    else if (PyInt_CheckExact(pyoutlen))
+        outlen = PyInt_AsLong(pyoutlen);
+    else if (PyLong_CheckExact(pyoutlen))
+        outlen = PyLong_AsLong(pyoutlen);
+    else {
+        PyErr_SetString(PyExc_TypeError, "max_len must be an integer");
+        return NULL;
+    }
 
     if (inlen == 1) outlen++; /* work around for what looks like a liblzf bug */
     if (outlen <= 0) {
