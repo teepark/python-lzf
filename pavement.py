@@ -9,7 +9,7 @@ from paver.setuputils import setup
 
 setup(
     name="python-lzf",
-    description="A C Extension for liblzf",
+    description="C Extension for liblzf",
     version="0.1",
     author="Travis Parker",
     author_email="travis.parker@gmail.com",
@@ -33,6 +33,11 @@ setup(
 MANIFEST = (
     "setup.py",
     "paver-minilib.zip",
+    "lzf_module.c",
+    "lzf_c.c",
+    "lzf_d.c",
+    "lzf.h",
+    "lzfP.h",
 )
 
 @task
