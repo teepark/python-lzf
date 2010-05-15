@@ -5,6 +5,10 @@ import lzf
 
 
 class LZFTest(object):
+    def __init__(self, *args, **kwargs):
+        super(LZFTest, self).__init__(*args, **kwargs)
+        self.VAL = self.VAL.encode('utf8')
+
     def compress(self, text):
         # lzf guarantees that even if the compressed version is longer, it is
         # within 104% of the original size (rounded up), so this should work
@@ -38,3 +42,7 @@ class StringWithRepetition(LZFTest, unittest.TestCase):
 
 class LongStringNoRepetition(LZFTest, unittest.TestCase):
     VAL = open(os.path.join(os.path.dirname(__file__), "lzf_module.c")).read()
+
+
+if __name__ == '__main__':
+    unittest.main()
