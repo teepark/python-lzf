@@ -4,23 +4,41 @@
 
 #if PY_MAJOR_VERSION >= 3
     #define PYBYTES_FSAS PyBytes_FromStringAndSize
+    #define PyInt_CheckExact(pyobj) 0
+    #define PyInt_AsLong(pyobj) 0
 #else
     #define PYBYTES_FSAS PyString_FromStringAndSize
 #endif
+
+#define GET_LONG(p,l) \
+    if (PyInt_CheckExact(p))\
+        l = PyInt_AsLong(p);\
+    else if (PyLong_CheckExact(p))\
+        l = PyLong_AsLong(p);\
+    else l = 0;
 
 
 static PyObject *
 python_compress(PyObject *self, PyObject *args) {
     char *input, *output;
     Py_ssize_t inlen;
-    long outlen = -1;
+    PyObject *pyoutlen = Py_None;
+    long outlen;
     PyObject *result;
 
-    if (!PyArg_ParseTuple(args, "s#|l", &input, &inlen, &outlen))
+    if (!PyArg_ParseTuple(args, "s#|O", &input, &inlen, &pyoutlen))
         return NULL;
 
-    if (outlen < 0) outlen = inlen - 1;
-    if (inlen == 1) outlen++;
+    if (pyoutlen == Py_None)
+        outlen = inlen - 1;
+    else
+        GET_LONG(pyoutlen, outlen)
+
+    if (inlen == 1) outlen++; /* work around for what looks like a liblzf bug */
+    if (outlen <= 0) {
+        PyErr_SetString(PyExc_ValueError, "max_len must be > 0");
+        return NULL;
+    }
 
     output = (char *)malloc(outlen);
     outlen = lzf_compress(input, inlen, output, outlen + 1);

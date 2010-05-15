@@ -20,10 +20,7 @@ class LZFTest(object):
         self.assertEqual(lzf.decompress(compressed, len(self.VAL)), self.VAL)
 
     def test_compression_negative_maxlen(self):
-        # on compress the behavior is to use the default: uncompressed_len - 1
-        a = lzf.compress(self.VAL)
-        b = lzf.compress(self.VAL, -6)
-        self.assertEqual(a, b)
+        self.assertRaises(ValueError, lzf.compress, self.VAL, -6)
 
     def test_decompression_negative_maxlen(self):
         c = self.compress(self.VAL)
