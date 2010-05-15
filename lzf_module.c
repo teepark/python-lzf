@@ -13,13 +13,13 @@ static PyObject *
 python_compress(PyObject *self, PyObject *args) {
     char *input, *output;
     Py_ssize_t inlen;
-    long outlen = 0;
+    long outlen = -1;
     PyObject *result;
 
     if (!PyArg_ParseTuple(args, "s#|l", &input, &inlen, &outlen))
         return NULL;
 
-    if (!outlen) outlen = inlen - 1;
+    if (outlen < 0) outlen = inlen - 1;
     if (inlen == 1) outlen++;
 
     output = (char *)malloc(outlen);
@@ -45,6 +45,11 @@ python_decompress(PyObject *self, PyObject *args) {
 
     if (!PyArg_ParseTuple(args, "s#l", &input, &inlen, &outlen))
         return NULL;
+
+    if (outlen < 0) {
+        PyErr_SetString(PyExc_ValueError, "max_len cannot be less than 0");
+        return NULL;
+    }
 
     output = (char *)malloc(outlen);
     outlen = lzf_decompress(input, inlen, output, outlen);
