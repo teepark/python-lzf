@@ -39,7 +39,11 @@ python_compress(PyObject *self, PyObject *args) {
         return NULL;
     }
 
-    output = (char *)malloc(outlen);
+    output = (char *)malloc(outlen + 1);
+    if (output == NULL) {
+        PyErr_SetString(PyExc_MemoryError, "out of memory");
+        return NULL;
+    }
     outlen = lzf_compress(input, inlen, output, outlen + 1);
 
     if (outlen)
