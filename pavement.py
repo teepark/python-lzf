@@ -10,7 +10,7 @@ from paver.setuputils import setup
 setup(
     name="python-lzf",
     description="C Extension for liblzf",
-    version="0.1.1",
+    version="0.2",
     author="Travis Parker",
     author_email="travis.parker@gmail.com",
     url="http://github.com/teepark/python-lzf",
