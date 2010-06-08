@@ -10,6 +10,9 @@
     #define PYBYTES_FSAS PyString_FromStringAndSize
 #endif
 
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 4
+    #define Py_ssize_t ssize_t
+#endif
 
 static PyObject *
 python_compress(PyObject *self, PyObject *args) {
