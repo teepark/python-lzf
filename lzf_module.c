@@ -98,7 +98,7 @@ python_decompress(PyObject *self, PyObject *args) {
 
 static PyMethodDef methods[] = {
     {"compress", python_compress, METH_VARARGS,
-"compress(input, max_length=0)\n\
+"compress(input, max_length=None)\n\
 \n\
 return the compressed string, or None if it doesn't compress to smaller \n\
 than the original\n\
