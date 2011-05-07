@@ -7,10 +7,12 @@ from paver.path import path
 from paver.setuputils import setup
 
 
+VERSION = (0, 2, 1)
+
 setup(
     name="python-lzf",
     description="C Extension for liblzf",
-    version="0.2",
+    version=".".join(filter(None, map(str, VERSION))),
     author="Travis Parker",
     author_email="travis.parker@gmail.com",
     url="http://github.com/teepark/python-lzf",
