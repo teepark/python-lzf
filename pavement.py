@@ -23,7 +23,7 @@ setup(
         include_dirs=('.',),
         extra_compile_args=['-Wall'])],
     classifiers = [
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Natural Language :: English",
