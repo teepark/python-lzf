@@ -85,6 +85,7 @@ python_decompress(PyObject *self, PyObject *args) {
     else {
         if (errno == EINVAL) {
             PyErr_SetString(PyExc_ValueError, "error in compressed data");
+            free(output);
             return NULL;
         }
         Py_XINCREF(Py_None);
