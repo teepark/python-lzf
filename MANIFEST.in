@@ -1,0 +1,7 @@
+include README.txt
+include LICENSE
+include setup.py
+include lzf_c.c
+include lzf_d.c
+include lzf.h
+include lzf_module.c
