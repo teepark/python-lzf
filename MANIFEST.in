@@ -4,4 +4,5 @@ include setup.py
 include lzf_c.c
 include lzf_d.c
 include lzf.h
+include lzfP.h
 include lzf_module.c
