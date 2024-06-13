@@ -1,7 +1,7 @@
 from setuptools import setup, Extension
 
 
-VERSION = (0, 2, 4)
+VERSION = (0, 2, 6)
 
 setup(
     name="python-lzf",
